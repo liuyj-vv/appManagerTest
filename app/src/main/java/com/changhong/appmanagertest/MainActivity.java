@@ -51,10 +51,14 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i< resolveInfoList.size(); i++) {
             Map<String, Object> map = new ArrayMap<>();
-            Drawable drawable = resolveInfoList.get(i).loadIcon(packageManager);
-            map.put(from[0], drawable);
+            //应用的图标
+            map.put(from[0], resolveInfoList.get(i).loadIcon(packageManager));
+            //应用的名称
             map.put(from[1], resolveInfoList.get(i).loadLabel(packageManager).toString());
-            map.put("package", resolveInfoList.get(i).activityInfo.packageName);
+            //应用的包名
+            map.put("packageName", resolveInfoList.get(i).activityInfo.packageName);
+            //应用的类名
+            map.put("className", resolveInfoList.get(i).activityInfo.name);
             list.add(map);
         }
 
@@ -65,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.e(TAG, Thread.currentThread().getStackTrace()[2].getMethodName()+"["+Thread.currentThread().getStackTrace()[2].getLineNumber()+"]"
-                        + "package: " + list.get(position).get("package"));
+                        + "packageName: " + list.get(position).get("packageName")
+                        + ", className: " + list.get(position).get("className"));
             }
         });
 
