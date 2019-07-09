@@ -17,6 +17,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -45,19 +46,28 @@ public class MainActivity extends AppCompatActivity {
         PackageManager packageManager = this.getPackageManager();
         applicationInfoList = this.getPackageManager().getInstalledApplications(PackageManager.CERT_INPUT_RAW_X509);
 
-        List<Map<String, Object>> list = new ArrayList<>();
+        final List<Map<String, Object>> list = new ArrayList<>();
 
         for (int i=0; i<applicationInfoList.size(); i++) {
             Map<String, Object> map = new ArrayMap<>();
             Drawable drawable = applicationInfoList.get(i).loadIcon(packageManager);
             map.put(from[0], drawable);
             map.put(from[1], applicationInfoList.get(i).loadLabel(packageManager).toString());
+            map.put("package", applicationInfoList.get(i).packageName);
             list.add(map);
         }
 
         ItemAdapter itemAdapter = new ItemAdapter(this, list, R.layout.layout_cell_item, from, to);
         gridView.setNumColumns(5);
         gridView.setAdapter(itemAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e(TAG, Thread.currentThread().getStackTrace()[2].getMethodName()+"["+Thread.currentThread().getStackTrace()[2].getLineNumber()+"]"
+                        + "package: " + list.get(position).get("package"));
+            }
+        });
+
     }
 
     private class ItemAdapter extends BaseAdapter{
