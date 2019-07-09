@@ -1,5 +1,6 @@
 package com.changhong.appmanagertest;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -68,9 +69,17 @@ public class MainActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String packageName = (String) list.get(position).get("packageName");
+                String className = (String) list.get(position).get("className");
+
                 Log.e(TAG, Thread.currentThread().getStackTrace()[2].getMethodName()+"["+Thread.currentThread().getStackTrace()[2].getLineNumber()+"]"
-                        + "packageName: " + list.get(position).get("packageName")
-                        + ", className: " + list.get(position).get("className"));
+                        + "packageName: " + packageName
+                        + ", className: " + className);
+
+                ComponentName componet = new ComponentName(packageName, className);
+                Intent intent = new Intent();
+                intent.setComponent(componet);
+                startActivity(intent);
             }
         });
 
