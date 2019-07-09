@@ -1,11 +1,11 @@
 package com.changhong.appmanagertest;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.RequiresApi;
@@ -13,7 +13,6 @@ import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -32,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     String TAG = "rrrrrrrrrrrrrrrrrrrrr";
     GridView gridView;
 
-    List<ApplicationInfo> applicationInfoList;
+    List<ResolveInfo> resolveInfoList;
     private String[] from = { "item_img", "item_name" };
     private int[] to = { R.id.item_img, R.id.item_name };
 
@@ -44,16 +42,19 @@ public class MainActivity extends AppCompatActivity {
         gridView = findViewById(R.id.gridView);
 
         PackageManager packageManager = this.getPackageManager();
-        applicationInfoList = this.getPackageManager().getInstalledApplications(PackageManager.CERT_INPUT_RAW_X509);
+        Intent intent = new Intent(Intent.ACTION_MAIN, null);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+        resolveInfoList = this.getPackageManager().queryIntentActivities(intent, 0);
 
         final List<Map<String, Object>> list = new ArrayList<>();
 
-        for (int i=0; i<applicationInfoList.size(); i++) {
+        for (int i = 0; i< resolveInfoList.size(); i++) {
             Map<String, Object> map = new ArrayMap<>();
-            Drawable drawable = applicationInfoList.get(i).loadIcon(packageManager);
+            Drawable drawable = resolveInfoList.get(i).loadIcon(packageManager);
             map.put(from[0], drawable);
-            map.put(from[1], applicationInfoList.get(i).loadLabel(packageManager).toString());
-            map.put("package", applicationInfoList.get(i).packageName);
+            map.put(from[1], resolveInfoList.get(i).loadLabel(packageManager).toString());
+            map.put("package", resolveInfoList.get(i).activityInfo.packageName);
             list.add(map);
         }
 
