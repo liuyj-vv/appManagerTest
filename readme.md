@@ -1,7 +1,9 @@
 
 # manifest.xml文件说明
 android.intent.action.MAIN	//程序入口
+
 android.intent.category.LAUNCHER	//显示到界面上
+
 android.intent.category.DEFAULT	//默认启动（startActivity启动时intent未带参数启动的activity）
 
 注意：
