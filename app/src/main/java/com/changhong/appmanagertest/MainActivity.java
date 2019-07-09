@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     List<ApplicationInfo> applicationInfoList;
     private String[] from = { "item_img", "item_name" };
     private int[] to = { R.id.item_img, R.id.item_name };
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +48,10 @@ public class MainActivity extends AppCompatActivity {
         List<Map<String, Object>> list = new ArrayList<>();
 
         for (int i=0; i<applicationInfoList.size(); i++) {
-            Log.e(TAG, Thread.currentThread().getStackTrace()[2].getMethodName()+"["+Thread.currentThread().getStackTrace()[2].getLineNumber()
-                + " icon: " + applicationInfoList.get(i).loadIcon(packageManager)
-                + ", lable: " + applicationInfoList.get(i).loadLabel(packageManager).toString());
             Map<String, Object> map = new ArrayMap<>();
             Drawable drawable = applicationInfoList.get(i).loadIcon(packageManager);
-            map.put("item_img", drawable);
-            map.put("item_name", applicationInfoList.get(i).loadLabel(packageManager).toString());
+            map.put(from[0], drawable);
+            map.put(from[1], applicationInfoList.get(i).loadLabel(packageManager).toString());
             list.add(map);
         }
 
