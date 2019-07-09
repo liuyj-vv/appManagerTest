@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     String TAG = "rrrrrrrrrrrrrrrrrrrrr";
     GridView gridView;
 
-    List<ResolveInfo> resolveInfoList;
+
     private String[] from = { "item_img", "item_name" };
     private int[] to = { R.id.item_img, R.id.item_name };
 
@@ -46,20 +46,15 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_MAIN, null);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-        resolveInfoList = this.getPackageManager().queryIntentActivities(intent, 0);
-
+        List<ResolveInfo> resolveInfoList = this.getPackageManager().queryIntentActivities(intent, 0);
         final List<Map<String, Object>> list = new ArrayList<>();
-
         for (int i = 0; i< resolveInfoList.size(); i++) {
             Map<String, Object> map = new ArrayMap<>();
-            //应用的图标
-            map.put(from[0], resolveInfoList.get(i).loadIcon(packageManager));
-            //应用的名称
-            map.put(from[1], resolveInfoList.get(i).loadLabel(packageManager).toString());
-            //应用的包名
-            map.put("packageName", resolveInfoList.get(i).activityInfo.packageName);
-            //应用的类名
-            map.put("className", resolveInfoList.get(i).activityInfo.name);
+
+            map.put(from[0], resolveInfoList.get(i).loadIcon(packageManager)); //应用的图标
+            map.put(from[1], resolveInfoList.get(i).loadLabel(packageManager).toString()); //应用的名称
+            map.put("packageName", resolveInfoList.get(i).activityInfo.packageName); //应用的包名
+            map.put("className", resolveInfoList.get(i).activityInfo.name); //应用的类名
             list.add(map);
         }
 
