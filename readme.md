@@ -13,7 +13,11 @@ android.intent.category.DEFAULT	//默认启动（startActivity启动时intent未
 
 # 关键代码
 ```
+        PackageManager packageManager = this.getPackageManager();
+        Intent intent = new Intent(Intent.ACTION_MAIN, null);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);  
         List<ResolveInfo> resolveInfoList = this.getPackageManager().queryIntentActivities(intent, 0);
+        
         final List<Map<String, Object>> list = new ArrayList<>();
         for (int i = 0; i< resolveInfoList.size(); i++) {
             Map<String, Object> map = new ArrayMap<>();

@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
         PackageManager packageManager = this.getPackageManager();
         Intent intent = new Intent(Intent.ACTION_MAIN, null);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
-
         List<ResolveInfo> resolveInfoList = this.getPackageManager().queryIntentActivities(intent, 0);
+
         final List<Map<String, Object>> list = new ArrayList<>();
         for (int i = 0; i< resolveInfoList.size(); i++) {
             Map<String, Object> map = new ArrayMap<>();
