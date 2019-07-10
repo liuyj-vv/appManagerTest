@@ -52,7 +52,7 @@ android.intent.category.DEFAULT	//默认启动（startActivity启动时intent未
 
 # 启动方法二
 仅仅需要包名的启动方式，这种方式存在一个问题：
-    当xml文件中存在两个或两个以上的activity同时配置了程序入口（android.intent.action.MAIN）和显示到界面上(android.intent.category.LAUNCHER)。那么这个app将会显示两个图标在界面上，当时两个图标都仅仅只能打开第一个activity。
+    当xml文件中存在两个或两个以上的activity同时配置了程序入口（android.intent.action.MAIN）和显示到界面上(android.intent.category.LAUNCHER)。那么这个app将会显示两个图标在界面上，**当时两个图标都仅仅只能打开第一个activity**。
 ```
     Intent intent = getPackageManager().getLaunchIntentForPackage(packageName);
     startActivity(intent);
